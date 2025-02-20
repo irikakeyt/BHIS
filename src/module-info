@@ -1,0 +1,10 @@
+/**
+ * 
+ */
+/**
+ * 
+ */
+module siopao {
+	requires java.desktop;
+	requires java.sql;
+}
