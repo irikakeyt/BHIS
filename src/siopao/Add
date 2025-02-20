@@ -1,0 +1,308 @@
+package siopao;
+
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import java.awt.Font;
+
+public class Add extends JFrame implements ActionListener {
+	Container container = getContentPane();
+	JLabel firstNameLabel = new JLabel("First Name");
+	JTextField firstName = new JTextField();
+	JLabel lastNameLabel = new JLabel("Last Name");
+	JTextField lastName = new JTextField();
+	JLabel sPWDLabel = new JLabel("Senior/PWD");
+	JTextField sPWD = new JTextField();
+	JLabel disabilityLabel = new JLabel("Disability");
+	JTextField disability = new JTextField();
+	JLabel genderLabel = new JLabel("Gender (Male/Female)");
+	JTextField gender = new JTextField();
+	JLabel dateOfBirthLabel = new JLabel("Date of Birth (1999-01-01)");
+	JTextField dateOfBirth = new JTextField();
+	JLabel contactNumberLabel = new JLabel("Contact Number");
+	JTextField contactNumber= new JTextField();
+	JLabel weightLabel = new JLabel("Weight");
+	JTextField weight = new JTextField();
+	JLabel heightLabel = new JLabel("Height");
+	JTextField  height = new JTextField();
+	JLabel bPressureLabel = new JLabel("Blood Pressure");
+	JTextField  bPressure = new JTextField();
+	JLabel hRateLabel = new JLabel("Heart Rate");
+	JTextField  hRate = new JTextField();
+	JLabel rRateLabel = new JLabel("Respiratory Rate");
+	JTextField  rRate = new JTextField();
+	JLabel pastMCLabel = new JLabel("Past Medical History");
+	JTextField  pastMC = new JTextField();
+	JLabel currentMCLabel = new JLabel("Current Medical COndition");
+	JTextField  currentMC = new JTextField();
+	JLabel chronicLabel = new JLabel("Chronic Illness");
+	JTextField  chronic = new JTextField();
+	JLabel sHistoryLabel = new JLabel("Surgical History");
+	JTextField  sHistory = new JTextField();
+	JLabel pMedicationsLabel = new JLabel("Past Medications");
+	JTextField  pMedications = new JTextField();
+	JLabel cMedicationsLabel = new JLabel("Current Medications");
+	JTextField  cMedications = new JTextField();
+	JButton submitButton = new JButton("Add");
+	JButton backButton = new JButton("Back");
+	JLabel upLabel = new JLabel("ADD RECORD");
+	Connection connection;
+
+    Add() {
+    	getContentPane().setBackground(new Color(255, 255, 255));
+        setLayoutManager();
+        setLocationAndSize();
+        addComponentsToContainer();
+        addActionEvent();
+        initializeDatabaseConnection();
+}
+
+		public void setLayoutManager() {
+            container.setLayout(null);
+        }
+        
+        public void setLocationAndSize() {
+        	firstNameLabel.setBounds(24, 104, 92, 31);
+        	firstName.setBackground(new Color(255, 255, 255));
+        	firstName.setBounds(24, 129, 173, 21);
+        	
+        	lastNameLabel.setBounds(27, 159, 101, 31);
+        	lastName.setBackground(new Color(255, 255, 255));
+        	lastName.setBounds(27, 186, 173, 21);
+        	
+        	sPWDLabel.setBounds(27, 225, 145, 31);
+        	sPWD.setBackground(new Color(255, 255, 255));
+        	sPWD.setBounds(27, 249, 173, 21);
+        	
+        	disabilityLabel.setBounds(27, 280, 65, 31);
+        	disability.setBackground(new Color(255, 255, 255));
+        	disability.setBounds(27, 307, 173, 21);
+        	
+        	genderLabel.setBounds(27, 338, 170, 31);
+        	gender.setBackground(new Color(255, 255, 255));
+        	gender.setBounds(27, 364, 173, 21);
+        	
+        	dateOfBirthLabel.setBounds(24, 398, 148, 31);
+        	dateOfBirth.setBackground(new Color(255, 255, 255));
+        	dateOfBirth.setBounds(24, 421, 173, 21);
+        	
+        	contactNumberLabel.setBounds(24, 452, 145, 31);
+        	contactNumber.setBackground(new Color(255, 255, 255));
+        	contactNumber.setBounds(24, 477, 173, 21);
+        	
+        	weightLabel.setBounds(257, 104, 115, 31);
+        	weight.setBackground(new Color(255, 255, 255));
+        	weight.setBounds(257, 129, 175, 21);
+        	
+        	heightLabel.setBounds(257, 159, 93, 31);
+        	height.setBackground(new Color(255, 255, 255));
+        	height.setBounds(257, 186, 175, 21);
+        	
+        	bPressureLabel.setBounds(257, 225, 162, 31);
+        	bPressure.setBackground(new Color(255, 255, 255));
+        	bPressure.setBounds(257, 249, 175, 21);
+        	
+        	hRateLabel.setBounds(257, 280, 129, 31);
+        	hRate.setBackground(new Color(255, 255, 255));
+        	hRate.setBounds(257, 307, 175, 21);
+        	
+        	rRateLabel.setBounds(257, 338, 162, 31);
+        	rRate.setBackground(new Color(255, 255, 255));
+        	rRate.setBounds(257, 364, 175, 21);
+        	
+        	pastMCLabel.setBounds(257, 398, 176, 31);
+        	pastMC.setBackground(new Color(255, 255, 255));
+        	pastMC.setBounds(257, 421, 173, 21);
+        	
+        	currentMCLabel.setBounds(256, 451, 198, 31);
+        	currentMC.setBackground(new Color(255, 255, 255));
+        	currentMC.setBounds(257, 477, 173, 21);
+        	
+        	chronicLabel.setBounds(479, 104, 101, 31);
+        	chronic.setBackground(new Color(255, 255, 255));
+        	chronic.setBounds(476, 129, 173, 21);
+        	
+        	sHistoryLabel.setBounds(480, 159, 198, 31);
+        	sHistory.setBackground(new Color(255, 255, 255));
+        	sHistory.setBounds(480, 186, 169, 21);
+        	
+        	pMedicationsLabel.setBounds(480, 225, 152, 31);
+        	pMedications.setBackground(new Color(255, 255, 255));
+        	pMedications.setBounds(480, 249, 169, 21);
+        	
+        	cMedicationsLabel.setBounds(480, 280, 176, 31);
+        	cMedications.setBackground(new Color(255, 255, 255));
+        	cMedications.setBounds(480, 307, 169, 21);
+        	
+        	submitButton.setBackground(new Color(179, 255, 179));
+        	submitButton.setBounds(584, 625, 65, 21);
+        	
+        	backButton.setBackground(new Color(179, 255, 179));
+        	backButton.setBounds(27, 625, 65, 21);
+        	
+        	upLabel.setBackground(new Color(255, 255, 255));
+        	upLabel.setFont(new Font("Imprint MT Shadow", Font.BOLD, 36));
+        	upLabel.setBounds(208, 29, 352, 41);      	
+        }
+        
+        public void addComponentsToContainer() {
+        	container.add(firstNameLabel);
+        	container.add(firstName);
+        	container.add(lastNameLabel);
+        	container.add(lastName);
+        	container.add(sPWDLabel);
+        	container.add(sPWD);
+        	container.add(disabilityLabel);
+        	container.add(disability);
+        	container.add(genderLabel);
+        	container.add(gender); 
+        	container.add(dateOfBirthLabel);
+        	container.add(dateOfBirth);
+        	container.add(contactNumberLabel);
+        	container.add(contactNumber);
+        	container.add(weightLabel);
+        	container.add(weight);
+        	container.add(heightLabel);
+        	container.add(height);
+        	container.add(bPressureLabel);
+        	container.add(bPressure);        	
+        	container.add(hRateLabel);
+        	container.add(hRate);
+        	container.add(rRateLabel);
+        	container.add(rRate);
+        	container.add(pastMCLabel);
+        	container.add(pastMC);
+        	container.add(currentMCLabel);
+        	container.add(currentMC);
+        	container.add(chronicLabel);
+        	container.add(chronic);
+        	container.add(sHistoryLabel);
+        	container.add(sHistory);
+        	container.add(pMedicationsLabel);
+        	container.add(pMedications);	        	
+        	container.add(cMedicationsLabel);
+        	container.add(cMedications);
+        	container.add(submitButton);   
+        	container.add(backButton);   
+        	container.add(upLabel);
+        }
+        
+        public void addActionEvent() {
+            submitButton.addActionListener(this);
+            backButton.addActionListener(this);
+        }
+        
+        private void initializeDatabaseConnection() {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/oop", "root", "");
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error connecting to the database", "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == submitButton) {
+            try {
+                String insertQuery = "INSERT INTO patient (firstName, lastName, SENIOR_OR_PWD, disability, gender, " +
+                        "age, dateOfBirth, contactNumber, weight, height, bloodPressure, heartRate, " +
+                        "respiratoryRate, pastMedicalConditions, currentMedicalConditions, chronicIllnesses, " +
+                        "surgicalHistory, pastMedications, currentMedications) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                String dob = dateOfBirth.getText();
+                int ageValue = calculateAge(dob);
+
+                PreparedStatement insertStatement = connection.prepareStatement(insertQuery);
+                insertStatement.setString(1, firstName.getText());
+                insertStatement.setString(2, lastName.getText());
+                insertStatement.setString(3, sPWD.getText());
+                insertStatement.setString(4, disability.getText());
+                insertStatement.setString(5, gender.getText());
+                insertStatement.setInt(6, ageValue); 
+                insertStatement.setString(7, dateOfBirth.getText());
+                insertStatement.setInt(8, Integer.parseInt(contactNumber.getText()));
+                insertStatement.setString(9, weight.getText());
+                insertStatement.setString(10, height.getText());
+                insertStatement.setString(11, bPressure.getText());
+                insertStatement.setInt(12, Integer.parseInt(hRate.getText()));
+                insertStatement.setInt(13, Integer.parseInt(rRate.getText()));
+                insertStatement.setString(14, pastMC.getText());
+                insertStatement.setString(15, currentMC.getText());
+                insertStatement.setString(16, chronic.getText());
+                insertStatement.setString(17, sHistory.getText());
+                insertStatement.setString(18, pMedications.getText());
+                insertStatement.setString(19, cMedications.getText());
+
+                int rowsAffected = insertStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(this, "Record added successfully", "Add Record Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    Home homeFrame = new Home();
+                    homeFrame.setTitle("Home");
+                    homeFrame.setSize(1700, 900);
+                    homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    homeFrame.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error adding the record to the database", "Add Record Error", JOptionPane.ERROR_MESSAGE);
+                }
+                insertStatement.close();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid values.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error adding the record to the database", "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (e.getSource() == backButton) {
+            	int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to back?", "Confirm", JOptionPane.YES_NO_OPTION);  
+                if (confirm == JOptionPane.YES_OPTION) {
+                dispose();
+                Home frame = new Home();
+                frame.setTitle("BHIS");
+                frame.setSize(1700, 900);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+                }
+            }
+        }
+    
+        private int calculateAge(String birthdate) {
+
+            String[] parts = birthdate.split("-");
+            int birthYear = Integer.parseInt(parts[0]);
+            int birthMonth = Integer.parseInt(parts[1]);
+            int birthDay = Integer.parseInt(parts[2]);
+
+            // Get the current date
+            java.util.Date currentDate = new java.util.Date();
+            int currentYear = currentDate.getYear() + 1900;
+            int currentMonth = currentDate.getMonth() + 1;
+            int currentDay = currentDate.getDate();
+
+            int age = currentYear - birthYear;
+
+            // Adjust age if the birthdate has not occurred yet this year
+            if (currentMonth < birthMonth || (currentMonth == birthMonth && currentDay < birthDay)) {
+                age--;
+            }
+            return age;
+        }
+        public static void main(String[] args) {
+        	Update frame = new Update();
+        	frame.setTitle("BHIS");
+        	frame.setBounds(400, 50, 700, 700);
+        	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        	frame.setVisible(true);
+        	frame.setResizable(false);
+        }
+}
